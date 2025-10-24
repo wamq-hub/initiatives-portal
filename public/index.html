@@ -501,7 +501,7 @@
         /* الأجهزة اللوحية والهواتف الكبيرة */
         @media (max-width: 768px) {
             :root {
-                --logo-size: 120px;
+                --logo-size: 60px;
             }
 
             body {
@@ -513,12 +513,11 @@
             }
             
             .logo-container {
-                width: 120px;
-                height: 120px;
+                display: none;
             }
             
             .logo-title-container {
-                gap: 15px;
+                gap: 10px;
             }
 
             .subtitle {
@@ -560,7 +559,7 @@
         /* الهواتف الذكية المتوسطة */
         @media (max-width: 480px) {
             :root {
-                --logo-size: 90px;
+                --logo-size: 50px;
             }
 
             body {
@@ -573,8 +572,8 @@
             }
             
             .logo-container {
-                width: 90px;
-                height: 90px;
+                width: 50px;
+                height: 50px;
             }
 
             .subtitle {
@@ -649,7 +648,7 @@
         /* الهواتف الصغيرة جداً */
         @media (max-width: 360px) {
             :root {
-                --logo-size: 70px;
+                --logo-size: 45px;
             }
 
             h1 {
@@ -657,8 +656,8 @@
             }
 
             .logo-container {
-                width: 70px;
-                height: 70px;
+                width: 45px;
+                height: 45px;
             }
 
             .subtitle {
@@ -1063,7 +1062,7 @@
                         </a>
 
                         <div class="clicks-badge">
-                            <span>👆 عدد النقرات</span>
+                            <span>👆</span>
                             <span class="clicks-number" id="clicks-initiative-${initiativeId}">${initiativeClicks}</span>
                         </div>
 
@@ -1074,7 +1073,7 @@
                         </a>
 
                         <div class="clicks-badge">
-                            <span>👆 عدد النقرات</span>
+                            <span>👆</span>
                             <span class="clicks-number" id="clicks-report-${initiativeId}">${reportClicks}</span>
                         </div>
                     </div>
