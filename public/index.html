@@ -27,6 +27,8 @@
             --border: #E5E7EB;
             --card: #FFFFFF;
             --surface: #F7FAF9;
+            
+            --logo-size: 200px;
         }
 
         * {
@@ -76,32 +78,7 @@
             z-index: 1;
         }
 
-        .logo-title-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
 
-        .logo-container {
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-
-        /* حركة الطفو (Float) - حركة ناعمة لأعلى وأسفل */
         @keyframes logoFloat {
             0%, 100% { 
                 transform: translateY(0) rotate(0deg);
@@ -111,53 +88,16 @@
             }
         }
 
-        /* حركة الدوران الخفيف (Subtle Rotate) */
-        @keyframes logoRotate {
-            0%, 100% { 
-                transform: rotate(0deg) scale(1);
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            50% { 
-                transform: rotate(10deg) scale(1.05);
-            }
-        }
-
-        /* حركة النبض (Pulse) */
-        @keyframes logoPulse {
-            0%, 100% { 
-                transform: scale(1);
+            to {
                 opacity: 1;
-            }
-            50% { 
-                transform: scale(1.1);
-                opacity: 0.9;
+                transform: translateY(0);
             }
         }
-
-        /* حركة التأرجح (Swing) */
-        @keyframes logoSwing {
-            0%, 100% { 
-                transform: rotate(0deg);
-            }
-            25% { 
-                transform: rotate(15deg);
-            }
-            75% { 
-                transform: rotate(-15deg);
-            }
-        }
-
-        /* حركة التوهج (Glow) */
-        @keyframes logoGlow {
-            0%, 100% { 
-                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-            }
-            50% { 
-                filter: drop-shadow(0 4px 20px rgba(200, 165, 92, 0.6));
-            }
-        }
-
-        /* يمكنك تغيير الحركة بتغيير اسم الـ animation في .logo-container img */
-        /* الخيارات: logoFloat, logoRotate, logoPulse, logoSwing, logoGlow */
 
         @keyframes pulse {
             0%, 100% { transform: scale(1) rotate(0deg); }
@@ -208,10 +148,17 @@
             border-radius: 15px;
             padding: 25px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-right: 5px solid var(--tvtc-secondary);
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+            border: 2px solid transparent;
+            background-image: 
+                linear-gradient(var(--card), var(--card)),
+                linear-gradient(135deg, var(--tvtc-primary), var(--tvtc-secondary), var(--tvtc-accent));
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
         }
 
         .initiative-card::before {
@@ -225,54 +172,99 @@
         }
 
         .initiative-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 99, 65, 0.2);
         }
 
         .initiative-title {
-            color: var(--tvtc-primary);
+            color: var(--card);
+            background: linear-gradient(135deg, var(--tvtc-primary) 0%, var(--tvtc-accent) 100%);
             font-size: 1.5em;
             font-weight: 700;
             margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-bottom: none;
+            box-shadow: 0 4px 15px rgba(0, 99, 65, 0.2);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .initiative-title::before {
+            content: '🌟';
+            font-size: 1.2em;
         }
 
         .initiative-field {
             margin-bottom: 12px;
-            padding: 8px;
-            border-radius: 5px;
+            padding: 10px 12px;
+            border-radius: 8px;
             background: var(--surface);
+            transition: all 0.3s ease;
+        }
+
+        .initiative-field:nth-child(odd) {
+            background: linear-gradient(135deg, #E6F1EC 0%, #F0F8F5 100%);
+            border-left: 3px solid var(--tvtc-primary);
+        }
+
+        .initiative-field:nth-child(even) {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFBF0 100%);
+            border-left: 3px solid var(--tvtc-secondary);
+        }
+
+        .initiative-field:hover {
+            box-shadow: 0 4px 12px rgba(0, 99, 65, 0.1);
+            transform: translateX(-3px);
         }
 
         .field-label {
             color: var(--tvtc-primary);
-            font-weight: 600;
+            font-weight: 700;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .initiative-field:nth-child(even) .field-label {
+            color: #C38E00;
         }
 
         .field-value {
             color: var(--tvtc-text);
-            line-height: 1.5;
-            font-weight: 400;
+            line-height: 1.6;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
         .stats-section {
             background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D4 100%);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
+            padding: 18px;
+            border-radius: 12px;
+            margin: 18px 0;
             border: 2px solid var(--tvtc-secondary);
+            box-shadow: 0 6px 20px rgba(200, 165, 92, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .stats-section:hover {
+            box-shadow: 0 8px 25px rgba(200, 165, 92, 0.25);
+            transform: translateY(-2px);
         }
 
         .stats-title {
-            color: var(--warning);
+            color: var(--tvtc-primary);
             font-weight: 700;
             font-size: 1.1em;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             text-align: center;
+            background: linear-gradient(135deg, var(--tvtc-primary), var(--tvtc-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .stats-content {
@@ -285,66 +277,168 @@
 
         .stat-item {
             text-align: center;
-            background: var(--card);
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, var(--card) 0%, #FFFBF0 100%);
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 99, 65, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid var(--tvtc-primary);
+        }
+
+        .stat-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 99, 65, 0.2);
         }
 
         .stat-number {
-            font-size: 2em;
-            font-weight: 800;
+            font-size: 2.2em;
+            font-weight: 900;
             color: var(--tvtc-primary);
             display: block;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover .stat-number {
+            color: var(--tvtc-accent);
         }
 
         .stat-label {
             font-size: 0.9em;
             color: var(--tvtc-text-muted);
-            margin-top: 5px;
-            font-weight: 600;
+            margin-top: 6px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover .stat-label {
+            color: var(--tvtc-primary);
         }
 
         .initiative-link {
             display: inline-block;
             background: linear-gradient(135deg, var(--tvtc-primary) 0%, var(--tvtc-accent) 100%);
             color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
+            padding: 13px 25px;
+            border-radius: 10px;
             text-decoration: none;
             margin-top: 15px;
-            transition: all 0.3s;
-            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 700;
             width: 100%;
             text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 99, 65, 0.2);
+            border: 2px solid transparent;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .initiative-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 99, 65, 0.3);
-            background: linear-gradient(135deg, var(--tvtc-primary-700) 0%, var(--tvtc-primary) 100%);
+        .initiative-link:hover:not(.disabled) {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 99, 65, 0.35);
+            background: linear-gradient(135deg, var(--tvtc-accent) 0%, var(--tvtc-primary) 100%);
+        }
+
+        .initiative-link.disabled {
+            background: linear-gradient(135deg, #E0E0E0 0%, #F0F0F0 100%);
+            color: #999;
+            cursor: not-allowed;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .initiative-link.disabled:hover {
+            transform: none;
+        }
+
+        .initiative-report-link {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--tvtc-secondary) 0%, #F4D03F 100%);
+            color: #1F2937;
+            padding: 13px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 700;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(200, 165, 92, 0.2);
+            border: 2px solid transparent;
+        }
+
+        .initiative-report-link:hover:not(.disabled) {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(200, 165, 92, 0.3);
+            background: linear-gradient(135deg, #F4D03F 0%, var(--tvtc-secondary) 100%);
+        }
+
+        .initiative-report-link.disabled {
+            background: linear-gradient(135deg, #E0E0E0 0%, #F0F0F0 100%);
+            color: #999;
+            cursor: not-allowed;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .initiative-report-link.disabled:hover {
+            transform: none;
         }
 
         footer {
-            background: var(--tvtc-primary);
+            background: linear-gradient(135deg, var(--tvtc-primary) 0%, var(--tvtc-accent) 100%);
             color: white;
             text-align: center;
-            padding: 25px;
-            border-top: 3px solid var(--tvtc-secondary);
+            padding: 40px 30px;
+            border-top: 4px solid var(--tvtc-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(200, 165, 92, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .footer-line {
-            width: 100px;
-            height: 3px;
+            width: 150px;
+            height: 4px;
             background: linear-gradient(90deg, transparent 0%, var(--tvtc-secondary) 50%, transparent 100%);
-            margin: 15px auto;
+            margin: 20px auto;
+            border-radius: 2px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(200, 165, 92, 0.4);
         }
 
         .designer-info {
+            font-size: 1em;
+            font-weight: 500;
+            line-height: 1.8;
+            opacity: 0.98;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .designer-info strong {
             font-size: 1.1em;
-            font-weight: 400;
-            line-height: 1.6;
-            opacity: 0.95;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .designer-info br + br {
+            content: '';
+            display: block;
+            height: 6px;
         }
 
         .no-data {
@@ -371,11 +465,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
-        .no-data ul {
-            text-align: center;
-            list-style-position: inside;
-        }
 
         .no-data-icon {
             font-size: 4em;
@@ -389,19 +478,6 @@
             50% { transform: translateY(-10px); }
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--tvtc-primary);
-            font-size: 1.2em;
-            font-weight: 600;
-        }
-        
-        .loading p {
-            animation: fadeIn 1s ease-in-out;
-            margin-top: 10px;
-        }
-        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -422,7 +498,12 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* الأجهزة اللوحية والهواتف الكبيرة */
         @media (max-width: 768px) {
+            :root {
+                --logo-size: 120px;
+            }
+
             body {
                 padding: 10px;
             }
@@ -432,8 +513,8 @@
             }
             
             .logo-container {
-                width: 60px;
-                height: 60px;
+                width: 120px;
+                height: 120px;
             }
             
             .logo-title-container {
@@ -463,129 +544,284 @@
                 padding: 30px 20px;
             }
 
-            .config-section {
-                padding: 20px 15px;
-            }
-
             .stats-content {
                 flex-direction: column;
             }
+
+            .initiative-field {
+                padding: 6px;
+            }
+
+            .field-label {
+                font-size: 0.85em;
+            }
         }
 
-        #loadingQuote {
-    transition: opacity 0.3s ease-in-out;
-}
+        /* الهواتف الذكية المتوسطة */
+        @media (max-width: 480px) {
+            :root {
+                --logo-size: 90px;
+            }
 
-/* شاشة الترحيب الكاملة */
-#welcomeScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--tvtc-primary) 0%, var(--tvtc-accent) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
+            body {
+                padding: 8px;
+            }
 
-#welcomeScreen.hide {
-    opacity: 0;
-    transform: scale(1.1);
-    pointer-events: none;
-}
+            h1 {
+                font-size: 1.6em;
+                margin-bottom: 10px;
+            }
+            
+            .logo-container {
+                width: 90px;
+                height: 90px;
+            }
 
-.welcome-content {
-    text-align: center;
-    color: white;
-    padding: 40px;
-    max-width: 800px;
-    animation: fadeInUp 1s ease;
-}
+            .subtitle {
+                font-size: 0.9em;
+                line-height: 1.4;
+                margin-bottom: 8px;
+            }
+            
+            .quality-badge {
+                font-size: 0.8em;
+                padding: 6px 15px;
+                margin-top: 10px;
+            }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+            .initiatives-grid {
+                padding: 15px 10px;
+                gap: 15px;
+            }
 
-.welcome-logo {
-    font-size: 8em;
-    margin-bottom: 20px;
-    animation: logoPulse 2s ease-in-out infinite;
-}
+            .initiative-card {
+                padding: 15px;
+                border-radius: 12px;
+            }
 
-.welcome-title {
-    font-size: 3em;
-    font-weight: 800;
-    margin-bottom: 20px;
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-}
+            .initiative-title {
+                font-size: 1.2em;
+                margin-bottom: 10px;
+            }
 
-.welcome-box {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 30px;
-    margin: 30px auto;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-}
+            header {
+                padding: 20px 15px;
+            }
 
-.welcome-text {
-    font-size: 1.4em;
-    line-height: 1.8;
-    margin: 15px 0;
-    font-weight: 600;
-}
+            .initiative-field {
+                margin-bottom: 10px;
+                padding: 6px;
+            }
 
-.welcome-spinner {
-    border: 5px solid rgba(255, 255, 255, 0.3);
-    border-top: 5px solid white;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-    margin: 30px auto;
-}
+            .field-label {
+                font-size: 0.8em;
+                margin-bottom: 3px;
+            }
 
-.welcome-quote {
-    font-size: 1.3em;
-    font-weight: 700;
-    margin-top: 25px;
-    min-height: 40px;
-    color: var(--tvtc-secondary);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    transition: opacity 0.3s ease;
-}
+            .field-value {
+                font-size: 0.9em;
+            }
 
-.welcome-status {
-    font-size: 1.1em;
-    margin-top: 20px;
-    opacity: 0.9;
-}
+            .stats-section {
+                padding: 12px;
+                margin: 12px 0;
+            }
+
+            .stats-title {
+                font-size: 1em;
+                margin-bottom: 8px;
+            }
+
+            .stat-number {
+                font-size: 1.6em;
+            }
+
+            .stat-label {
+                font-size: 0.8em;
+            }
+
+            .initiative-link {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* الهواتف الصغيرة جداً */
+        @media (max-width: 360px) {
+            :root {
+                --logo-size: 70px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .logo-container {
+                width: 70px;
+                height: 70px;
+            }
+
+            .subtitle {
+                font-size: 0.85em;
+            }
+
+            .initiatives-grid {
+                padding: 10px 5px;
+                gap: 10px;
+            }
+
+            .initiative-card {
+                padding: 12px;
+            }
+
+            .initiative-links-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .initiative-link {
+                width: 100%;
+                min-width: 100%;
+            }
+
+            .clicks-badge {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        #welcomeScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--tvtc-primary) 0%, var(--tvtc-accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        #welcomeScreen.hide {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        .welcome-content {
+            text-align: center;
+            color: white;
+            padding: 50px;
+            max-width: 600px;
+            animation: fadeInUp 1s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-logo {
+            font-size: 5.5em;
+            margin-bottom: 12px;
+            animation: pulse 2s ease-in-out infinite;
+            display: block;
+        }
+
+        .welcome-title {
+            font-size: 2em;
+            font-weight: 800;
+            margin-bottom: 28px;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            line-height: 1.3;
+        }
+
+        .welcome-spinner {
+            border: 6px solid rgba(255, 255, 255, 0.25);
+            border-top: 6px solid var(--tvtc-secondary);
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            animation: spin 2s linear infinite;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(200, 165, 92, 0.3);
+        }
+
+        .welcome-status {
+            font-size: 1.15em;
+            margin-top: 18px;
+            opacity: 0.96;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            line-height: 1.4;
+        }
+
+        .welcome-quote {
+            font-size: 1.05em;
+            font-weight: 700;
+            margin-top: 22px;
+            min-height: 45px;
+            color: var(--tvtc-secondary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: opacity 0.3s ease;
+            line-height: 1.6;
+            padding: 0 10px;
+        }
+
+        .initiative-links-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        .clicks-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--tvtc-secondary) 0%, #f4d03f 100%);
+            color: var(--tvtc-primary);
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1em;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(200, 165, 92, 0.3);
+            min-height: 48px;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .clicks-badge .clicks-number {
+            font-size: 1.3em;
+            font-weight: 800;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
-        <!-- شاشة الترحيب -->
     <div id="welcomeScreen">
         <div class="welcome-content">
             <div class="welcome-logo">✨</div>
-            
             <h2 class="welcome-title">مرحباً بك في بوابة المبادرات</h2>
-            
-            
             <div class="welcome-spinner"></div>
-            
-            <p class="welcome-quote" id="welcomeQuote"></p>
-            
             <p class="welcome-status">⏳ جاري تحميل المبادرات...</p>
+            <p class="welcome-quote" id="welcomeQuote"></p>
         </div>
     </div>
 
@@ -594,7 +830,7 @@
             <div class="header-content">
                 <div class="logo-title-container">
                     <div class="logo-container">
-                        <img src="logo.png" alt="شعار المؤسسة العامة للتدريب التقني والمهني" onerror="this.style.display='none'">
+                        <img src="logo.png" alt="شعار الكلية" onerror="this.style.display='none'">
                     </div>
                     <h1>🌟 بوابة المبادرات 🌟</h1>
                 </div>
@@ -608,28 +844,25 @@
             </div>
         </header>
 
-
-<div id="initiativesContainer" class="initiatives-grid">
-    <!-- سيتم ملء المحتوى ديناميكياً -->
-</div>
+        <div id="initiativesContainer" class="initiatives-grid">
+        </div>
 
         <footer>
             <div class="footer-line"></div>
             <div class="designer-info">
-                <strong>تم التصميم بواسطة</strong><br>
-                م. فهد بن عبدالله صالح<br>
-                وكيل ضبط الجودة بالكلية التقنية بحقل
+                <strong style="font-size: 1.15em; display: block; margin-bottom: 12px;">✨ تم التصميم والتطوير بواسطة ✨</strong>
+                <strong style="font-size: 1.1em; color: var(--tvtc-secondary); display: block; margin-bottom: 6px;">👨‍💼 م. فهد بن عبدالله صالح</strong>
+                <span style="display: block; opacity: 0.9;">🏆 وكيل ضبط الجودة - الكلية التقنية بحقل</span>
             </div>
             <div class="footer-line"></div>
         </footer>
     </div>
 
     <script>
-        // عبارات تحفيزية للتحميل
         const motivationalQuotes = [
-            "💫 المبادرة هي أساس التميز...",
+            "🎯 المبادرة هي أساس التميز...",
             "🌟 نحو مستقبل أفضل بمبادراتكم...",
-            "✨ التطوير المستمر طريقنا للنجاح...",
+            "✨ التطوير المستمر طريقتنا للنجاح...",
             "🎯 معاً نحو التميز والإبداع...",
             "🚀 مبادراتنا تصنع الفارق...",
             "💡 الإبداع يبدأ بفكرة والنجاح بمبادرة...",
@@ -639,15 +872,12 @@
             "🏆 نسعى للأفضل دائماً..."
         ];
 
-        // اختيار عبارة عشوائية
         function getRandomQuote() {
             return motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
         }
 
-        // قراءة رابط السكربت من ملف config.js
         let appScriptUrl = window.CONFIG ? window.CONFIG.SCRIPT_URL : '';
 
-        // تحميل المبادرات تلقائياً عند فتح الصفحة
         window.addEventListener('load', function() {
             if (appScriptUrl) {
                 loadInitiatives();
@@ -659,73 +889,63 @@
                         <p style="margin-top: 15px; color: var(--tvtc-text);">
                             الرجاء التأكد من وجود ملف config.js وإعداده بشكل صحيح
                         </p>
-                        <div style="margin-top: 20px; padding: 15px; background: var(--tvtc-primary-100); border-radius: 10px; display: inline-block;">
-                            <p style="color: var(--tvtc-primary); font-weight: 600;">
-                                💪 كل بداية تتطلب إعداداً محكماً
-                            </p>
-                        </div>
                     </div>
                 `;
             }
         });
 
-async function loadInitiatives() {
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    const welcomeQuote = document.getElementById('welcomeQuote');
-    const container = document.getElementById('initiativesContainer');
+        async function loadInitiatives() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const welcomeQuote = document.getElementById('welcomeQuote');
+            const container = document.getElementById('initiativesContainer');
 
-    // عرض العبارات المتغيرة
-    welcomeQuote.textContent = getRandomQuote();
-    const quoteInterval = setInterval(() => {
-        welcomeQuote.style.opacity = '0';
-        setTimeout(() => {
             welcomeQuote.textContent = getRandomQuote();
-            welcomeQuote.style.opacity = '1';
-        }, 300);
-    }, 3000);
+            const quoteInterval = setInterval(() => {
+                welcomeQuote.style.opacity = '0';
+                setTimeout(() => {
+                    welcomeQuote.textContent = getRandomQuote();
+                    welcomeQuote.style.opacity = '1';
+                }, 300);
+            }, 3000);
 
-    try {
-        await registerVisitor();
-        const response = await fetch(`${appScriptUrl}?action=getInitiatives`);
-        const data = await response.json();
+            try {
+                await registerVisitor();
+                const response = await fetch(`${appScriptUrl}?action=getInitiatives`);
+                const data = await response.json();
 
-        clearInterval(quoteInterval);
+                clearInterval(quoteInterval);
 
-        if (data.success && data.initiatives) {
-            // إخفاء شاشة الترحيب بعد ثانية
-            setTimeout(() => {
+                if (data.success && data.initiatives) {
+                    setTimeout(() => {
+                        welcomeScreen.classList.add('hide');
+                        setTimeout(() => {
+                            welcomeScreen.style.display = 'none';
+                        }, 800);
+                    }, 1000);
+                    
+                    displayInitiatives(data.initiatives);
+                } else {
+                    throw new Error(data.error || 'فشل في جلب البيانات');
+                }
+            } catch (error) {
+                clearInterval(quoteInterval);
                 welcomeScreen.classList.add('hide');
-                // إزالة الشاشة من DOM بعد انتهاء الـ transition
                 setTimeout(() => {
                     welcomeScreen.style.display = 'none';
                 }, 800);
-            }, 1000);
-            
-            displayInitiatives(data.initiatives);
-        } else {
-            throw new Error(data.error || 'فشل في جلب البيانات');
+                
+                container.innerHTML = `
+                    <div class="no-data">
+                        <div class="no-data-icon">🔄</div>
+                        <h3>نعمل على تحسين الاتصال</h3>
+                        <p style="margin-top: 15px; color: var(--tvtc-text);">
+                            ${error.message}
+                        </p>
+                    </div>
+                `;
+            }
         }
-    } catch (error) {
-        clearInterval(quoteInterval);
-        
-        // إخفاء شاشة الترحيب
-        welcomeScreen.classList.add('hide');
-        setTimeout(() => {
-            welcomeScreen.style.display = 'none';
-        }, 800);
-        
-        // عرض رسالة الخطأ
-        container.innerHTML = `
-            <div class="no-data">
-                <div class="no-data-icon">🔄</div>
-                <h3>نعمل على تحسين الاتصال</h3>
-                <p style="margin-top: 15px; color: var(--tvtc-text);">
-                    ${error.message}
-                </p>
-            </div>
-        `;
-    }
-}
+
         async function registerVisitor() {
             try {
                 const visitorData = {
@@ -743,19 +963,21 @@ async function loadInitiatives() {
             }
         }
 
-        async function trackClick(initiativeId, initiativeName) {
+        async function trackClick(initiativeId, initiativeName, type = 'initiative') {
             try {
                 await fetch(`${appScriptUrl}?action=trackClick`, {
                     method: 'POST',
                     body: JSON.stringify({
                         initiativeId: initiativeId,
                         initiativeName: initiativeName,
+                        type: type,
                         timestamp: new Date().toISOString()
                     })
                 });
 
-                // تحديث العداد في الواجهة
-                const clickElement = document.getElementById(`clicks-${initiativeId}`);
+                // تحديث العداد حسب نوع النقرة
+                const elementId = type === 'report' ? `clicks-report-${initiativeId}` : `clicks-initiative-${initiativeId}`;
+                const clickElement = document.getElementById(elementId);
                 if (clickElement) {
                     const currentClicks = parseInt(clickElement.textContent);
                     clickElement.textContent = currentClicks + 1;
@@ -776,15 +998,6 @@ async function loadInitiatives() {
                         <p style="margin-top: 15px; font-size: 1.1em; color: var(--tvtc-primary); font-weight: 600;">
                             💡 كل فكرة عظيمة تبدأ بمبادرة
                         </p>
-                        <p style="margin-top: 10px;">
-                            نحن في الكلية التقنية بحقل نعمل باستمرار على تطوير مبادرات جديدة<br>
-                            تهدف إلى التحسين المستمر والتميز في الأداء
-                        </p>
-                        <div style="margin-top: 20px; padding: 15px; background: var(--tvtc-primary-100); border-radius: 10px; display: inline-block;">
-                            <p style="color: var(--tvtc-primary); font-weight: 600;">
-                                ✨ تابعونا قريباً لمبادرات ملهمة ومؤثرة
-                            </p>
-                        </div>
                     </div>
                 `;
                 return;
@@ -801,15 +1014,19 @@ async function loadInitiatives() {
                 const initiativeGoal = initiative.goal || 'غير محدد';
                 const responsibleEntity = initiative.entity || 'غير محدد';
                 const responsiblePerson = initiative.person || 'غير محدد';
-                const initiativeDesign = initiative.design || 'غير محدد';
+                const launchDate = initiative.launchDate || 'غير محدد';
+                const operationalGoal = initiative.operationalGoal || 'غير محدد';
+                const designer = initiative.designer || 'غير محدد';
                 const initiativeLink = initiative.link || '#';
-                const clicks = initiative.clicks || 0;
+                const reportLink = initiative.reportLink || '#';
+                const initiativeClicks = initiative.initiativeClicks || 0;
+                const reportClicks = initiative.reportClicks || 0;
 
                 card.innerHTML = `
                     <h3 class="initiative-title">${initiativeName}</h3>
                     
                     <div class="initiative-field">
-                        <span class="field-label">🎯 هدف المبادرة:</span>
+                        <span class="field-label">🎨 هدف المبادرة:</span>
                         <div class="field-value">${initiativeGoal}</div>
                     </div>
 
@@ -824,28 +1041,43 @@ async function loadInitiatives() {
                     </div>
 
                     <div class="initiative-field">
-                        <span class="field-label">📐 تصميم المبادرة:</span>
-                        <div class="field-value">${initiativeDesign}</div>
+                        <span class="field-label">📅 تاريخ الإطلاق:</span>
+                        <div class="field-value">${launchDate}</div>
                     </div>
 
-                    <div class="stats-section">
-                        <div class="stats-title">📊 إحصائيات الدخول إلى المبادرة</div>
-                        <div class="stats-content">
-                            <div class="stat-item">
-                                <span class="stat-number" id="clicks-${initiativeId}">${clicks}</span>
-                                <span class="stat-label">👆 عدد النقرات</span>
-                            </div>
+                    <div class="initiative-field">
+                        <span class="field-label">🔵 الهدف التشغيلي المرتبط بالمبادرة:</span>
+                        <div class="field-value">${operationalGoal}</div>
+                    </div>
+
+                    <div class="initiative-field">
+                        <span class="field-label">👨‍💼 مصمم المبادرة:</span>
+                        <div class="field-value">${designer}</div>
+                    </div>
+
+                    <div class="initiative-links-container">
+                        <a href="${initiativeLink && initiativeLink !== '#' ? initiativeLink : '#'}" 
+                            ${initiativeLink && initiativeLink !== '#' ? 'target="_blank" onclick="trackClick(\'' + initiativeId + '\', \'' + initiativeName.replace(/'/g, "\\'") + '\', \'initiative\')"' : 'onclick="return false;"'}
+                            class="initiative-link ${initiativeLink && initiativeLink !== '#' ? '' : 'disabled'}">
+                            ${initiativeLink && initiativeLink !== '#' ? '🔗 الدخول للمبادرة' : '❌ لا توجد مبادرة'}
+                        </a>
+
+                        <div class="clicks-badge">
+                            <span>👆 عدد النقرات</span>
+                            <span class="clicks-number" id="clicks-initiative-${initiativeId}">${initiativeClicks}</span>
+                        </div>
+
+                        <a href="${reportLink && reportLink !== '#' ? reportLink : '#'}" 
+                            ${reportLink && reportLink !== '#' ? 'target="_blank" onclick="trackClick(\'' + initiativeId + '\', \'' + initiativeName.replace(/'/g, "\\'") + '\', \'report\')"' : 'onclick="return false;"'}
+                            class="initiative-link ${reportLink && reportLink !== '#' ? '' : 'disabled'}">
+                            ${reportLink && reportLink !== '#' ? '📄 تقرير المبادرة' : '❌ لا يوجد تقرير'}
+                        </a>
+
+                        <div class="clicks-badge">
+                            <span>👆 عدد النقرات</span>
+                            <span class="clicks-number" id="clicks-report-${initiativeId}">${reportClicks}</span>
                         </div>
                     </div>
-
-                    ${initiativeLink && initiativeLink !== '#' ? 
-                        `<a href="${initiativeLink}" 
-                            target="_blank" 
-                            class="initiative-link"
-                            onclick="trackClick('${initiativeId}', '${initiativeName.replace(/'/g, "\\'")}')">
-                            🔗 الدخول للمبادرة ←
-                        </a>` 
-                        : ''}
                 `;
 
                 container.appendChild(card);
