@@ -6,7 +6,7 @@
 window.CONFIG = {
     // ضع هنا رابط Google Apps Script Web App
     // احصل عليه بعد نشر السكربت من Google Apps Script
-    SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxDtmrA4Ct0ib61A7QMK9bRixNYpDuvl0rTpy022AvgunSn33X0JNh4Fx0tRFMLVFzwkw/exec',
+    SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwcpNeUHl3YCq67RVtD21b0PRNObVwod01rJj9gaq887OopQ1sekG7xPhse9YZoE2UtBQ/exec',
     
     // إعدادات إضافية (اختيارية)
     AUTO_REFRESH: false,        // تحديث تلقائي للبيانات
